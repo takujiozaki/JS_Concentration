@@ -1,0 +1,16 @@
+#stage{
+    width: 80%;
+    border: solid 1px #222;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+#stage div{
+    width: 25%;
+    text-align: center;
+}
+
+#message{
+    text-align: center;
+}

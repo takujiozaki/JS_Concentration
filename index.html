@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>神経衰弱</title>
+    <link rel="stylesheet" href="css/index.css">
+</head>
+<body>
+    <h1>神経衰弱</h1>
+    <div id="stage">
+        <div>
+            <img src="imgs/cardBack.png" alt="" class="card">
+        </div>
+        <div>
+            <img src="imgs/cardBack.png" alt="" class="card">
+        </div>
+        <div>
+            <img src="imgs/cardBack.png" alt="" class="card">
+        </div>
+        <div>
+            <img src="imgs/cardBack.png" alt="" class="card">
+        </div>
+        <div>
+            <img src="imgs/cardBack.png" alt="" class="card">
+        </div>
+        <div>
+            <img src="imgs/cardBack.png" alt="" class="card">
+        </div>
+        <div>
+            <img src="imgs/cardBack.png" alt="" class="card">
+        </div>
+        <div>
+            <img src="imgs/cardBack.png" alt="" class="card">
+        </div>
+    </div>
+    <div id="message"></div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+        $(function(){
+            const cards = ["CJ","CQ","DJ","DQ","HA","HK","SA","SK"];
+            //シャッフル
+            cards.sort(()=> Math.random() - 0.5);
+            const match = [];//選択済みカード
+            let game = true;//ゲームコントロール
+            $(".card").each(function(index){
+                $(this).on('click',function(){
+                    //カードが裏むいている時だけ有効
+                    if($(this).attr('src') == 'imgs/cardBack.png'){
+                        //カードをOpen
+                        $(this).attr('src','imgs/'+cards[index]+'.png')
+                        //選択カードに追加
+                        match.push(index)
+                        if(match.length > 1 && match.length%2 == 0){ 
+                            choicedCards = match.slice(-2)//選択したカードから後ろから二枚を抜く
+                            if(cards[choicedCards[0]].substr(1,1) == cards[choicedCards[1]].substr(1,1)) {//match
+                                
+                                console.log('match')
+                                //終了判定
+                                if(cards.length == match.length){
+                                    console.log('Game Over');
+                                    $("#message").text("Game Over");
+                                }
+                            }else{//not match
+                                console.log('not match')
+                                //1秒後にカードを戻す
+                                setTimeout(function(){
+                                    $(".card").eq(choicedCards[0]).attr('src','imgs/cardBack.png');
+                                    $(".card").eq(choicedCards[1]).attr('src','imgs/cardBack.png');
+                                    //選択済みカードから末尾二枚を削除
+                                    match.pop();
+                                    match.pop();
+                                },1000);
+                            }
+                        }
+                    }
+                    
+                });
+            })
+        })
+    </script>
+</body>
+</html>
